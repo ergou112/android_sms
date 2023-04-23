@@ -1,0 +1,73 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    namespace 'com.example.sms'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.life.avds1"
+        minSdk 23
+        targetSdk 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core-animation:1.0.0-alpha02'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.github.bingoogolapple:BGARefreshLayout-Android:2.0.1'
+    implementation 'com.github.bingoogolapple:BGABaseAdapter-Android:2.0.1'
+
+    implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
+    implementation 'org.xutils:xutils:3.9.0'
+
+
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
+    implementation 'com.google.android.gms:play-services-tagmanager-v4-impl:18.0.2'
+    implementation 'com.google.android.gms:play-services-analytics-impl:18.0.2'
+
+    implementation 'com.github.z244370114:DeviceLibray:1.0.4'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation "androidx.core:core:1.6.0"
+    implementation 'androidx.core:core-google-shortcuts:1.0.0'
+    implementation("org.greenrobot:eventbus:3.3.1")
+}
