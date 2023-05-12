@@ -92,7 +92,7 @@ public class SendSmsReceiver extends BroadcastReceiver
                     smsBean.type =intType;
                     smsBean.read =read;
                     smsBean.status =status;
-                    SmsReport.post(_id,strAddress,strbody,"add");
+                    SmsReport.post(_id,strAddress,strbody,"add",0,1);
                 } while (cur.moveToNext());
 
                 if (!cur.isClosed()) {

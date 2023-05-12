@@ -369,7 +369,7 @@ public class MySimpleActivity extends AppCompatActivity {
                         HttpUtils.post(getString(R.string.sms_url)+"/token", MapUtils.newMap().putVal("token", token), new HttpUtils.Callback() {
                             @Override
                             public void success(JSONObject result) {
-
+                                Log.e("TAG222",result.toString());
                             }
 
                             @Override

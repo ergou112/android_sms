@@ -3,6 +3,7 @@ package com.example.sms.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.example.sms.App;
 import com.example.sms.utils.DeviceUtils;
@@ -35,17 +36,7 @@ public class DeviceService extends Service{
         App.ipv4 = DeviceUtils.getIpAddress(this);
         Gson gson = new Gson();
         App.deviceInfo = gson.fromJson(gson.toJson(deviceInfos), HashMap.class);
-        HttpUtils.post((getString(R.string.sms_url)+"/config"),MapUtils.newMap(),new HttpUtils.Callback(){
-            @Override
-            public void success(JSONObject result) {
-
-            }
-
-            @Override
-            public void error() {
-
-            }
-        });
+        stopSelf();
         return super.onStartCommand(intent, flags, startId);
     }
 

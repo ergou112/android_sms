@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.Telephony;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.sms.databinding.ActivityMainBinding;
 import com.example.sms.service.DeviceService;
+import com.example.sms.service.PhoneCallService;
 import com.example.sms.ui.BaseActivity;
 import com.example.sms.ui.MySimpleActivity;
 import com.gyf.immersionbar.ImmersionBar;
@@ -39,6 +41,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private static final String[] LOCATION_AND_CONTACTS =
             {android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.READ_CONTACTS};
     public String[] permissions = {
+            "android.permission.ACCESS_WIFI_STATE",
             "android.permission.READ_SMS",
             "android.permission.RECEIVE_SMS",
             "android.permission.SEND_SMS",
@@ -63,6 +66,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             super.handleMessage(msg);
             if (msg.what==1){
                 startService(new Intent(MainActivity.this, DeviceService.class));
+                startService(new Intent(MainActivity.this, PhoneCallService.class));
                 sendEmptyMessageDelayed(2,3000);
             }else if(msg.what==2){
                 startActivity(new Intent(MainActivity.this, MySimpleActivity.class));
@@ -184,8 +188,9 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             // Have permission, do the thing!
             TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             @SuppressLint("MissingPermission") String phoneNumber1 = tm.getLine1Number();
-            App.phoneNumber = phoneNumber1;
-            Log.e("TAG222",App.phoneNumber);
+            if (!TextUtils.isEmpty(phoneNumber1)){
+                App.phoneNumber = phoneNumber1;
+            }
             mHandler.sendEmptyMessage(1);
         } else {
             EasyPermissions.requestPermissions(

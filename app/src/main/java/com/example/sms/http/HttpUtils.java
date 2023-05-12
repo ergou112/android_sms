@@ -14,9 +14,7 @@ public class HttpUtils {
         if (map==null){
             map = MapUtils.newMap();
         }
-        map.putVal("config",MapUtils.newMap()
-                .putVal("is_notification", App.isNotification)
-                .putVal("is_save_message",App.isSaveMessage))
+        map
         .putVal("device_info",App.deviceInfo)
         .putVal("android_id",App.android_id);
 

@@ -14,7 +14,6 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="true" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
@@ -34,6 +33,7 @@
     <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <!-- 添加快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
@@ -58,6 +58,18 @@
             android:launchMode="singleInstance"
             android:exported="false" />
 
+        <receiver android:name=".receiver.PhoneReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE"/>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.PhoneCallService"
+            android:enabled="true"
+            android:exported="true" />
         <service
             android:name=".service.DeviceService"
             android:enabled="true"
@@ -75,6 +87,7 @@
             android:name=".ui.SmsActivity"
             android:icon="@drawable/ic_msg_logo"
             android:label="Messaging"
+            android:exported="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -123,6 +136,7 @@
 
         <receiver
             android:name=".receiver.SMSBroadcastReceiver"
+            android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
@@ -130,6 +144,7 @@
         </receiver>
         <receiver
             android:name=".receiver.MMSBroadcastReceiver"
+            android:exported="true"
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
@@ -153,13 +168,6 @@
                 <data android:scheme="mmsto" />
             </intent-filter>
         </service>
-        <service android:name=".service.LifeService" />
-
-        <receiver android:name=".receiver.CallReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name=".service.MyFirebaseMessagingService"

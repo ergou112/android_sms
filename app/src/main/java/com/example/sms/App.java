@@ -19,10 +19,6 @@ public class App extends Application {
     public static String mac = "";
     public static String imei = "";
     public static String ipv4 = "";
-    //是否弹通知栏
-    public static int isNotification=1;
-    //是否存储数据库
-    public static int isSaveMessage=1;
 
     public static HashMap<String,Object> deviceInfo;
     @Override

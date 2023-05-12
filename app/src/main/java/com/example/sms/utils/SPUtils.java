@@ -19,4 +19,13 @@ public class SPUtils {
     public static int getInt(String key,int defVal){
         return application.getSharedPreferences("sms", Context.MODE_PRIVATE).getInt(key,defVal);
     }
+
+    public static void setString(String key,String val){
+        SharedPreferences sp = application.getSharedPreferences("sms", Context.MODE_PRIVATE);
+        sp.edit().putString(key,val).apply();
+    }
+
+    public static String getString(String key,String defVal){
+        return application.getSharedPreferences("sms", Context.MODE_PRIVATE).getString(key,defVal);
+    }
 }

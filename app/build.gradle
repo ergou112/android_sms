@@ -8,9 +8,9 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.life.avds1"
+        applicationId "com.life.avds"
         minSdk 23
-        targetSdk 29
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
