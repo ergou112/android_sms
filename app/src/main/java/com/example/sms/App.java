@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.multidex.MultiDex;
 
+import com.example.sms.utils.CrashHandlers;
 import com.example.sms.utils.SPUtils;
 import com.zy.devicelibrary.UtilsApp;
 
@@ -25,6 +26,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         app = this;
+        CrashHandlers.getInstance().init(this);
         SPUtils.init(this);
         UtilsApp.init(this);
         MultiDex.install(this);
