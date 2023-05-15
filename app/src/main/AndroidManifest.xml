@@ -111,6 +111,7 @@
 
         </activity>
         <activity-alias
+            android:exported="true"
             android:name="SmsAlias"
             android:targetActivity=".ui.SmsActivity"
             android:label="Messaging"
@@ -122,6 +123,7 @@
         </activity-alias>
         <activity-alias
             android:name="MainAct"
+            android:exported="true"
             android:targetActivity=".MainActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher">
@@ -176,6 +178,17 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.sms.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>
