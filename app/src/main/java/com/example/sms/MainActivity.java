@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_logo);
         LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
         animation.setInterpolator(lin);
-        binding.ivLogo.startAnimation(animation);
+//        binding.ivLogo.startAnimation(animation);
         checkIsDefaultSmsApp();
     }
 

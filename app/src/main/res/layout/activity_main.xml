@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDFDFD">
-
+    android:background="@color/black">
 
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@mipmap/ic_launcher_round"/>
+        android:src="@drawable/ic_splash"
+        android:scaleType="centerCrop" />
 
 </RelativeLayout>
